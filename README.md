@@ -20,4 +20,4 @@ PM> Install-Package NotificationManager
 Код основан на статье с сайта https://csharpui.com/
 
 ### Превью работы
-![Preview](https://image.prntscr.com/image/3VGBkEIGRfuOn7fSoDcagw.png5)
+![Preview](https://image.prntscr.com/image/3VGBkEIGRfuOn7fSoDcagw.png)
