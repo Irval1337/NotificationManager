@@ -17,7 +17,7 @@ PM> Install-Package NotificationManager
 - Есть возможность закрыть все текущие уведомления. Используйте метод `Notify.CloseAll` с отсутствием аргументов
 
 Примеры использования библиотеки: https://github.com/Irval1337/NotificationManager/tree/main/Examples
-Код основан на статье с сайта https://csharpui.com/
+<br>Код уведомления основан на статье с сайта https://csharpui.com/</br>
 
 ### Превью работы
 ![Preview](https://image.prntscr.com/image/3VGBkEIGRfuOn7fSoDcagw.png)
