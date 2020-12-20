@@ -8,6 +8,10 @@
 ``` powershell
 PM> Install-Package NotificationManager
 ```
+**.NET CLI**
+``` bash
+> dotnet add package NotificationManager
+```
 
 ### Использование в проекте
 - Инициализируйте класс `Notify`
