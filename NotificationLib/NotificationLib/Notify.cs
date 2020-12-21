@@ -3,16 +3,20 @@ using System.Windows.Forms;
 
 namespace NotificationManager
 {
-    public class Notify
+    public class Manager
     {
         public int MaxCount = 9;
 
-        public void Alert(string msg, NotificationForm.enmType type, Font font)
+        public Font font = new Font("Century Gothic", 12);
+
+        public Colors Colors;
+
+        public void Alert(string msg, NotificationType type)
         {
             if (Properties.Notification.Default.nums < MaxCount)
             {
                 NotificationForm frm = new NotificationForm();
-                frm.showAlert(msg, type, font, MaxCount);
+                frm.showAlert(msg, type, this);
             }
         }
 
@@ -28,5 +32,24 @@ namespace NotificationManager
                     frm.Close();
             }
         }
+    }
+
+    public enum NotificationType
+    {
+        Success,
+        Warning,
+        Error,
+        Info
+    }
+
+    public class Colors
+    {
+        public Color Success = Color.FromArgb(255, 38, 171, 99);
+
+        public Color Error = Color.FromArgb(255, 171, 37, 54);
+
+        public Color Info = Color.RoyalBlue;
+
+        public Color Warning = Color.DarkOrange;
     }
 }

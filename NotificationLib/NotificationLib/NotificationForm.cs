@@ -13,22 +13,14 @@ namespace NotificationManager
             InitializeComponent();
         }
 
-        public enum enmAction
+        public enum Action
         {
             wait,
             start,
             close
         }
 
-        public enum enmType
-        {
-            Success,
-            Warning,
-            Error,
-            Info
-        }
-
-        private NotificationForm.enmAction action;
+        private Action action;
 
         private int x, y;
 
@@ -36,11 +28,11 @@ namespace NotificationManager
         {
             switch (this.action)
             {
-                case enmAction.wait:
+                case Action.wait:
                     timer1.Interval = 5000;
-                    action = enmAction.close;
+                    action = Action.close;
                     break;
-                case enmAction.start:
+                case Action.start:
                     this.timer1.Interval = 1;
                     this.Opacity += 0.1;
                     if (this.x < this.Location.X)
@@ -51,32 +43,32 @@ namespace NotificationManager
                     {
                         if (this.Opacity == 1.0)
                         {
-                            action = enmAction.wait;
+                            action = Action.wait;
                         }
                     }
                     break;
-                case enmAction.close:
+                case Action.close:
                     timer1.Interval = 1;
                     this.Opacity -= 0.1;
 
                     this.Left -= 3;
                     if (base.Opacity == 0.0)
                     {
-                        NotificationManager.Properties.Notification.Default.nums--;
+                        Notification.Default.nums--;
                         base.Dispose();
                     }
                     break;
             }
         }
 
-        public void showAlert(string msg, enmType type, Font font, int size)
+        public void showAlert(string msg, NotificationType type, Manager notify)
         {
-            lblMsg.Font = font;
+            lblMsg.Font = notify.font;
             this.Opacity = 0.0;
             this.StartPosition = FormStartPosition.Manual;
             string fname;
 
-            for (int i = 1; i < size + 1; i++)
+            for (int i = 1; i < notify.MaxCount + 1; i++)
             {
                 fname = "alert" + i.ToString();
                 NotificationForm frm = (NotificationForm)Application.OpenForms[fname];
@@ -87,7 +79,7 @@ namespace NotificationManager
                     this.x = Screen.PrimaryScreen.WorkingArea.Width - this.Width + 15;
                     this.y = Screen.PrimaryScreen.WorkingArea.Height - this.Height * i - 5 * i;
                     this.Location = new Point(this.x, this.y);
-                    NotificationManager.Properties.Notification.Default.nums++;
+                    Notification.Default.nums++;
                     break;
                 }
             }
@@ -95,19 +87,19 @@ namespace NotificationManager
 
             switch (type)
             {
-                case enmType.Success:
+                case NotificationType.Success:
                     this.pictureBox1.Image = Resources.success;
                     this.BackColor = Color.FromArgb(255, 38, 171, 99);
                     break;
-                case enmType.Error:
+                case NotificationType.Error:
                     this.pictureBox1.Image = Resources.error;
                     this.BackColor = Color.FromArgb(255, 171, 37, 54);
                     break;
-                case enmType.Info:
+                case NotificationType.Info:
                     this.pictureBox1.Image = Resources.info;
                     this.BackColor = Color.RoyalBlue;
                     break;
-                case enmType.Warning:
+                case NotificationType.Warning:
                     this.pictureBox1.Image = Resources.warning;
                     this.BackColor = Color.DarkOrange;
                     break;
@@ -116,7 +108,7 @@ namespace NotificationManager
 
             this.lblMsg.Text = msg;
             this.Show();
-            this.action = enmAction.start;
+            this.action = Action.start;
             this.timer1.Interval = 1;
             this.timer1.Start();
         }
@@ -135,14 +127,14 @@ namespace NotificationManager
         private void Notification_FormClosing(object sender, FormClosingEventArgs e)
         {
             timer1.Interval = 1;
-            this.action = enmAction.close;
+            this.action = Action.close;
             e.Cancel = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Interval = 1;
-            action = enmAction.close;
+            action = Action.close;
         }
     }
 }
