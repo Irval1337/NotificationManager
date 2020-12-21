@@ -14,11 +14,13 @@ PM> Install-Package NotificationManager
 ```
 
 ### Использование в проекте
-- Инициализируйте класс `Notify`
-- Изменяйте максимальное количество уведомлений путем изменения значения `Notify.MaxCount` (изначально 9)
-- Отправляйте уведомления на экран, путем вызова метода `Notify.Alert` (Пример реализации: `Notify.Alert("Success", NotificationForm.enmType.Success, new Font("Century Gothic", 12));`)
-<br> Возможный значения параметра `type`: `NotificationForm.enmType.Success`, `NotificationForm.enmType.Error`, `NotificationForm.enmType.Warning`, `NotificationForm.enmType.Info` </br>
-- Есть возможность закрыть все текущие уведомления. Используйте метод `Notify.CloseAll` с отсутствием аргументов
+- Инициализируйте класс `Manager`
+- Контролируйте максимальное количество уведомлений путем изменения значения `Manager.MaxCount` (изначально 9)
+- Изменяйте шрифт уведомлений, сохраненный в `Manager.Font` (изначатьно `Century Gothic, 12px`)
+- Изменийте цвета типов уведомлений, путем изменения переменной `Colors` класса `Colors` (доступны значения `Success`, `Error`, `Warning`, `Info`)
+- Отправляйте уведомления на экран, путем вызова метода `Manager.Alert` (Пример реализации: `Notify.Alert("Success", NotificationType.Success);`)
+<br> Возможный значения параметра `type`: `NotificationType.Success`, `NotificationType.Error`, `NotificationType.Warning`, `NotificationType.Info`</br>
+- Есть возможность закрыть все текущие уведомления. Используйте метод `NotificationType.CloseAll` с отсутствием аргументов
 
 Примеры использования библиотеки: https://github.com/Irval1337/NotificationManager/tree/main/Examples
 <br>Код уведомления основан на статье с сайта https://csharpui.com/</br>
