@@ -19,8 +19,8 @@ PM> Install-Package NotificationManager
 - Изменяйте шрифт уведомлений, сохраненный в `Manager.Font` (изначатьно `Century Gothic, 12px`)
 - Изменийте цвета типов уведомлений, путем изменения переменной `Colors` класса `Colors` (доступны значения `Success`, `Error`, `Warning`, `Info`)
 - Отправляйте уведомления на экран, путем вызова метода `Manager.Alert` (Пример реализации: `Notify.Alert("Success", NotificationType.Success);`)
-<br> Возможный значения параметра `type`: `NotificationType.Success`, `NotificationType.Error`, `NotificationType.Warning`, `NotificationType.Info`</br>
-- Есть возможность закрыть все текущие уведомления. Используйте метод `NotificationType.CloseAll` с отсутствием аргументов
+<br> Возможный значения параметра `type`: `NotificationType.Success`, `NotificationType.Error`, `NotificationType.Warning`, `NotificationType.Info`, `NotificationType.Custom` (требует особого списка аргументов при вызове `Manager.Alert`)</br>
+- Есть возможность закрыть все текущие уведомления. Для этого используйте метод `NotificationType.CloseAll`
 
 Примеры использования библиотеки: https://github.com/Irval1337/NotificationManager/tree/main/Examples
 <br>Код уведомления основан на статье с сайта https://csharpui.com/</br>
