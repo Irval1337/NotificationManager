@@ -8,6 +8,10 @@
 ``` powershell
 PM> Install-Package NotificationManager
 ```
+**.NET CLI**
+``` bash
+> dotnet add package NotificationManager
+```
 
 ### Использование в проекте
 - Инициализируйте класс `Notify`
@@ -17,3 +21,7 @@ PM> Install-Package NotificationManager
 - Есть возможность закрыть все текущие уведомления. Используйте метод `Notify.CloseAll` с отсутствием аргументов
 
 Примеры использования библиотеки: https://github.com/Irval1337/NotificationManager/tree/main/Examples
+<br>Код уведомления основан на статье с сайта https://csharpui.com/</br>
+
+### Превью работы
+![Preview](https://image.prntscr.com/image/hqdX8y4xQXyeccZ02UlUjw.png)
