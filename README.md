@@ -26,4 +26,4 @@ PM> Install-Package NotificationManager
 <br>Код уведомления основан на статье с сайта https://csharpui.com/</br>
 
 ### Превью работы
-![Preview](https://image.prntscr.com/image/hqdX8y4xQXyeccZ02UlUjw.png)
+![Preview](https://image.prntscr.com/image/kMrRu3WbS6aB3Uc5Qyr7Vg.png)
