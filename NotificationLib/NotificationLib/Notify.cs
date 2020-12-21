@@ -12,11 +12,20 @@ namespace NotificationManager
         public Colors Colors;
 
         public void Alert(string msg, NotificationType type)
-        {
+        { 
             if (Properties.Notification.Default.nums < MaxCount)
             {
                 NotificationForm frm = new NotificationForm();
                 frm.showAlert(msg, type, this);
+            }
+        }
+
+        public void Alert(string msg, NotificationType type, Color color, Image picture)
+        {
+            if (Properties.Notification.Default.nums < MaxCount)
+            {
+                NotificationForm frm = new NotificationForm();
+                frm.showAlert(msg, type, color, picture, this);
             }
         }
 
@@ -39,7 +48,8 @@ namespace NotificationManager
         Success,
         Warning,
         Error,
-        Info
+        Info,
+        Custom
     }
 
     public class Colors

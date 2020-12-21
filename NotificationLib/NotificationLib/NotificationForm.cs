@@ -113,6 +113,13 @@ namespace NotificationManager
             this.timer1.Start();
         }
 
+        public void showAlert(string msg, NotificationType type, Color color, Image picture, Manager notify)
+        {
+            this.pictureBox1.Image = picture;
+            this.BackColor = color;
+            showAlert(msg, type, notify);
+        }
+
         protected override CreateParams CreateParams
         {
             get

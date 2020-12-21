@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using NotificationManager;
 
@@ -38,6 +39,11 @@ namespace NotificationExample
         private void button5_Click(object sender, EventArgs e)
         {
             notify.Alert("Info", NotificationType.Info);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            notify.Alert("С наступающим!", NotificationType.Custom, Color.FromArgb(255, 21, 29, 33), Properties.Resources.logo);
         }
     }
 }
