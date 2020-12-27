@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace NotificationManager
@@ -9,7 +10,9 @@ namespace NotificationManager
 
         public Font font = new Font("Century Gothic", 12);
 
-        public Colors Colors;
+        public Colors Colors = new Colors();
+
+        public Images Images = new Images();
 
         public void Alert(string msg, NotificationType type)
         { 
@@ -41,6 +44,14 @@ namespace NotificationManager
                     frm.Close();
             }
         }
+
+        public void StopTimer(int Milliseconds)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            while (sw.ElapsedMilliseconds < Milliseconds)
+                Application.DoEvents();
+        }
     }
 
     public enum NotificationType
@@ -61,5 +72,18 @@ namespace NotificationManager
         public Color Info = Color.RoyalBlue;
 
         public Color Warning = Color.DarkOrange;
+    }
+
+    public class Images
+    {
+        public Image Success = Properties.Resources.success;
+
+        public Image Error = Properties.Resources.error;
+
+        public Image Info = Properties.Resources.info;
+
+        public Image Warning = Properties.Resources.warning;
+
+        public Image Cancel = Properties.Resources.cancel;
     }
 }

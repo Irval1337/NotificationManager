@@ -85,23 +85,25 @@ namespace NotificationManager
             }
             this.x = Screen.PrimaryScreen.WorkingArea.Width - base.Width - 5;
 
+            this.button1.Image = notify.Images.Cancel;
+
             switch (type)
             {
                 case NotificationType.Success:
-                    this.pictureBox1.Image = Resources.success;
-                    this.BackColor = Color.FromArgb(255, 38, 171, 99);
+                    this.pictureBox1.Image = notify.Images.Success;
+                    this.BackColor = notify.Colors.Success;
                     break;
                 case NotificationType.Error:
-                    this.pictureBox1.Image = Resources.error;
-                    this.BackColor = Color.FromArgb(255, 171, 37, 54);
+                    this.pictureBox1.Image = notify.Images.Error;
+                    this.BackColor = notify.Colors.Error;
                     break;
                 case NotificationType.Info:
-                    this.pictureBox1.Image = Resources.info;
-                    this.BackColor = Color.RoyalBlue;
+                    this.pictureBox1.Image = notify.Images.Info;
+                    this.BackColor = notify.Colors.Info;
                     break;
                 case NotificationType.Warning:
-                    this.pictureBox1.Image = Resources.warning;
-                    this.BackColor = Color.DarkOrange;
+                    this.pictureBox1.Image = notify.Images.Warning;
+                    this.BackColor = notify.Colors.Warning;
                     break;
             }
 

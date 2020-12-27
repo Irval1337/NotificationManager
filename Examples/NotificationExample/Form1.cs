@@ -44,6 +44,8 @@ namespace NotificationExample
         private void button6_Click(object sender, EventArgs e)
         {
             notify.Alert("С наступающим!", NotificationType.Custom, Color.FromArgb(255, 21, 29, 33), Properties.Resources.logo);
+            notify.StopTimer(1000);
+            notify.Alert("Happy New Year!", NotificationType.Custom, Color.FromArgb(255, 21, 29, 33), Properties.Resources.logo);
         }
     }
 }
