@@ -43,7 +43,7 @@
             this.lblMsg.ForeColor = System.Drawing.Color.White;
             this.lblMsg.Location = new System.Drawing.Point(71, 28);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(115, 20);
+            this.lblMsg.Size = new System.Drawing.Size(116, 21);
             this.lblMsg.TabIndex = 6;
             this.lblMsg.Text = "Message Text";
             // 

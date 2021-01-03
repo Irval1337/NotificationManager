@@ -13,7 +13,9 @@ namespace NotificationManager
             InitializeComponent();
         }
 
-        public enum Action
+        Manager manager;
+
+        private enum Action
         {
             wait,
             start,
@@ -29,29 +31,46 @@ namespace NotificationManager
             switch (this.action)
             {
                 case Action.wait:
-                    timer1.Interval = 5000;
+                    timer1.Interval = manager.WaitingTime;
                     action = Action.close;
                     break;
                 case Action.start:
-                    this.timer1.Interval = 1;
+                    this.timer1.Interval = manager.TimerInterval;
                     this.Opacity += 0.1;
-                    if (this.x < this.Location.X)
-                    {
-                        this.Left--;
-                    }
+                    if (this.Opacity == 1.0)
+                        action = Action.wait;
                     else
                     {
-                        if (this.Opacity == 1.0)
+                        switch (manager.PositionType) 
                         {
-                            action = Action.wait;
+                            case NotificationPosition.Right:
+                                this.Left--;
+                                break;
+                            case NotificationPosition.Left:
+                                this.Left++;
+                                break;
+                            case NotificationPosition.Middle:
+                                this.Top += manager.InvertAdding ? 1 : -1;
+                                break;
                         }
                     }
+                    
                     break;
                 case Action.close:
-                    timer1.Interval = 1;
+                    timer1.Interval = manager.TimerInterval;
                     this.Opacity -= 0.1;
-
-                    this.Left -= 3;
+                    switch (manager.PositionType)
+                    {
+                        case NotificationPosition.Right:
+                            this.Left -= 3;
+                            break;
+                        case NotificationPosition.Left:
+                            this.Left += 3;
+                            break;
+                        case NotificationPosition.Middle:
+                            this.Top += manager.InvertAdding ? 3 : -3;
+                            break;
+                    }
                     if (base.Opacity == 0.0)
                     {
                         Notification.Default.nums--;
@@ -63,7 +82,8 @@ namespace NotificationManager
 
         public void showAlert(string msg, NotificationType type, Manager notify)
         {
-            lblMsg.Font = notify.font;
+            manager = notify;
+            lblMsg.Font = notify.Font;
             this.Opacity = 0.0;
             this.StartPosition = FormStartPosition.Manual;
             string fname;
@@ -76,8 +96,19 @@ namespace NotificationManager
                 if (frm == null)
                 {
                     this.Name = fname;
-                    this.x = Screen.PrimaryScreen.WorkingArea.Width - this.Width + 15;
-                    this.y = Screen.PrimaryScreen.WorkingArea.Height - this.Height * i - 5 * i;
+                    switch (manager.PositionType)
+                    {
+                        case NotificationPosition.Right:
+                            this.x = Screen.PrimaryScreen.WorkingArea.Width - this.Width - 15;
+                            break;
+                        case NotificationPosition.Left:
+                            this.x = 15;
+                            break;
+                        case NotificationPosition.Middle:
+                            this.x = (Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2;
+                            break;
+                    }
+                    this.y = !manager.InvertAdding ? Screen.PrimaryScreen.WorkingArea.Height - this.Height * i - 5 * i : this.Height * i + 5 * i;
                     this.Location = new Point(this.x, this.y);
                     Notification.Default.nums++;
                     break;
@@ -111,7 +142,7 @@ namespace NotificationManager
             this.lblMsg.Text = msg;
             this.Show();
             this.action = Action.start;
-            this.timer1.Interval = 1;
+            this.timer1.Interval = notify.TimerInterval;
             this.timer1.Start();
         }
 
@@ -135,14 +166,14 @@ namespace NotificationManager
 
         private void Notification_FormClosing(object sender, FormClosingEventArgs e)
         {
-            timer1.Interval = 1;
+            timer1.Interval = manager.TimerInterval;
             this.action = Action.close;
             e.Cancel = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            timer1.Interval = 1;
+            timer1.Interval = manager.TimerInterval;
             action = Action.close;
         }
     }

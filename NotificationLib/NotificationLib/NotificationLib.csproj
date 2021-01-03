@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Notify.cs" />
+    <Compile Include="Manager.cs" />
     <Compile Include="NotificationForm.cs">
       <SubType>Form</SubType>
     </Compile>
