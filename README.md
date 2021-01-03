@@ -13,16 +13,13 @@ PM> Install-Package NotificationManager
 > dotnet add package NotificationManager
 ```
 
-### Использование в проекте
-- Инициализируйте класс `Manager`
-- Контролируйте максимальное количество уведомлений путем изменения значения `Manager.MaxCount` (изначально 9)
-- Изменяйте шрифт уведомлений, сохраненный в `Manager.Font` (изначатьно `Century Gothic, 12px`)
-- Изменийте цвета типов уведомлений, путем изменения переменной `Colors` класса `Colors` (доступны значения `Success`, `Error`, `Warning`, `Info`)
-- Отправляйте уведомления на экран, путем вызова метода `Manager.Alert` (Пример реализации: `Notify.Alert("Success", NotificationType.Success);`)
-Возможные значения параметра `type`: `NotificationType.Success`, `NotificationType.Error`, `NotificationType.Warning`, `NotificationType.Info`, `NotificationType.Custom` (требует особого списка аргументов при вызове `Manager.Alert`)
-- Есть возможность закрыть все текущие уведомления. Для этого используйте метод `NotificationType.CloseAll`
+### Основные возможности
+- Отображение уведомлений с заданным текстом и типом
+- Использование кастомизируемых уведомлений
+- Изменение положения отображения и скорости анимаций
+- Возможность настройки цвета и изображений на отоюражаемой форме
 
-Подробнее можно прочитать на странице Wiki.
+Документация ко всем методам и свойствам библиотеки находится на странице Wiki.
 
 Примеры использования библиотеки: https://github.com/Irval1337/NotificationManager/tree/main/Examples
 Код уведомления основан на статье с сайта https://csharpui.com/
