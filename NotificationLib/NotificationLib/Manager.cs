@@ -47,14 +47,37 @@ namespace NotificationManager
         public NotificationPosition PositionType = NotificationPosition.Right;
 
         /// <summary>
+		/// Смещение уведомлений после закрытия предыдущего.
+		/// </summary>
+        public bool EnableOffset = true;
+
+        /// <summary>
+		/// Максимальная длина текста уведомления в пикселях.
+		/// </summary>
+        public int MaxTextWidth = 225;
+
+        /// <summary>
 		/// Отобразить новое уведомление стандартного типа на экране.
 		/// </summary>
         /// <param name="msg"> Основное отображаемое сообщение. </param>
 		/// <param name="type"> Тип уведомления. </param>
 		/// <returns> </returns>
         public void Alert(string msg, NotificationType type)
-        { 
-            if (Properties.Notification.Default.nums < MaxCount)
+        {
+            int max = 0;
+            switch (PositionType)
+            {
+                case NotificationPosition.Right:
+                    max = Properties.Notification.Default.right;
+                    break;
+                case NotificationPosition.Left:
+                    max = Properties.Notification.Default.left;
+                    break;
+                case NotificationPosition.Middle:
+                    max = Properties.Notification.Default.middle;
+                    break;
+            }
+            if (max < MaxCount)
             {
                 NotificationForm frm = new NotificationForm();
                 frm.showAlert(msg, type, this);
@@ -71,7 +94,7 @@ namespace NotificationManager
 		/// <returns> </returns>
         public void Alert(string msg, NotificationType type, Color color, Image picture)
         {
-            if (Properties.Notification.Default.nums < MaxCount)
+            if (Properties.Notification.Default.right < MaxCount)
             {
                 NotificationForm frm = new NotificationForm();
                 frm.showAlert(msg, type, color, picture, this);

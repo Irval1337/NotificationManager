@@ -15,8 +15,10 @@ namespace NotificationExample
         public Form1()
         {
             InitializeComponent();
+            notify1.MaxTextWidth = 250;
 
-            notify2.PositionType = NotificationPosition.Left;
+            notify2.PositionType = NotificationPosition.Right;
+            notify2.InvertAdding = true;
 
             notify3.PositionType = NotificationPosition.Middle;
 
@@ -26,7 +28,7 @@ namespace NotificationExample
 
         private void button1_Click(object sender, EventArgs e)
         {
-            notify1.Alert("Success", NotificationType.Success);
+            notify1.Alert("SuccessSuccessSuccessSuccess", NotificationType.Success);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -57,6 +59,11 @@ namespace NotificationExample
             notify1.Alert("С наступающим!", NotificationType.Custom, Color.FromArgb(255, 21, 29, 33), Properties.Resources.logo);
             notify1.StopTimer(1000);
             notify1.Alert("Happy New Year!", NotificationType.Custom, Color.FromArgb(255, 21, 29, 33), Properties.Resources.logo);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            notify1.InvertAdding = notify2.InvertAdding = notify3.InvertAdding = notify4.InvertAdding = !notify4.InvertAdding;
         }
     }
 }

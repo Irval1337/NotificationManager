@@ -1,5 +1,6 @@
 ﻿using NotificationManager.Properties;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -13,7 +14,7 @@ namespace NotificationManager
             InitializeComponent();
         }
 
-        Manager manager;
+        public Manager manager;
 
         private enum Action
         {
@@ -54,7 +55,6 @@ namespace NotificationManager
                                 break;
                         }
                     }
-                    
                     break;
                 case Action.close:
                     timer1.Interval = manager.TimerInterval;
@@ -73,8 +73,22 @@ namespace NotificationManager
                     }
                     if (base.Opacity == 0.0)
                     {
-                        Notification.Default.nums--;
-                        base.Dispose();
+                        if (manager.PositionType == NotificationPosition.Right)
+                            Notification.Default.right--;
+                        if (manager.PositionType == NotificationPosition.Left)
+                            Notification.Default.left--;
+                        if (manager.PositionType == NotificationPosition.Middle)
+                            Notification.Default.middle--;
+
+                        foreach (var frm in Application.OpenForms)
+                        {
+                            if (frm.GetType() != this.GetType())
+                                continue;
+                            if (manager.EnableOffset && frm != null && ((NotificationForm)frm).manager.PositionType == manager.PositionType && !frm.Equals(this))
+                                ((NotificationForm)frm).ChangePosition();
+                        }
+
+                        this.Close();
                     }
                     break;
             }
@@ -86,36 +100,69 @@ namespace NotificationManager
             lblMsg.Font = notify.Font;
             this.Opacity = 0.0;
             this.StartPosition = FormStartPosition.Manual;
-            string fname;
+            int Count = 1;
+            bool? isInverted = null;
+            bool isDisposed = false;
 
-            for (int i = 1; i < notify.MaxCount + 1; i++)
+            foreach (var frm in Application.OpenForms)
             {
-                fname = "alert" + i.ToString();
-                NotificationForm frm = (NotificationForm)Application.OpenForms[fname];
-
-                if (frm == null)
+                if (frm.GetType() != this.GetType())
+                    continue;
+                if (frm != null && ((NotificationForm)frm).manager.PositionType == manager.PositionType && !frm.Equals(this))
                 {
-                    this.Name = fname;
-                    switch (manager.PositionType)
+                    if (isInverted == null)
+                        isInverted = ((NotificationForm)frm).manager.InvertAdding;
+                    else if (((NotificationForm)frm).manager.InvertAdding != isInverted || isInverted != manager.InvertAdding)
                     {
-                        case NotificationPosition.Right:
-                            this.x = Screen.PrimaryScreen.WorkingArea.Width - this.Width - 15;
-                            break;
-                        case NotificationPosition.Left:
-                            this.x = 15;
-                            break;
-                        case NotificationPosition.Middle:
-                            this.x = (Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2;
-                            break;
+                        if (manager.PositionType == NotificationPosition.Right)
+                            Notification.Default.right--;
+                        if (manager.PositionType == NotificationPosition.Left)
+                            Notification.Default.left--;
+                        if (manager.PositionType == NotificationPosition.Middle)
+                            Notification.Default.middle--;
+                        isDisposed = true;
+                        this.Close();
                     }
-                    this.y = !manager.InvertAdding ? Screen.PrimaryScreen.WorkingArea.Height - this.Height * i - 5 * i : this.Height * i + 5 * i;
-                    this.Location = new Point(this.x, this.y);
-                    Notification.Default.nums++;
-                    break;
+                    Count++;
                 }
             }
-            this.x = Screen.PrimaryScreen.WorkingArea.Width - base.Width - 5;
+            this.Name = "alert" + (Count + 1).ToString();
+            this.lblMsg.Text = msg;
+            int delta = lblMsg.Width - 225;
+            if (lblMsg.Width > 225)
+            {
+                if (lblMsg.Width >= manager.MaxTextWidth)
+                {
+                    delta = manager.MaxTextWidth - 225;
+                    lblMsg.AutoSize = false;
+                    lblMsg.Width = manager.MaxTextWidth;
+                }
+                this.Width += delta;
+                button1.Location = new Point(button1.Location.X + delta, button1.Location.Y);
+            }
 
+            switch (manager.PositionType)
+            {
+                case NotificationPosition.Right:
+                    this.x = Screen.PrimaryScreen.WorkingArea.Width - this.Width - 10;
+                    break;
+                case NotificationPosition.Left:
+                    this.x = 10;
+                    break;
+                case NotificationPosition.Middle:
+                    this.x = (Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2;
+                    break;
+            }
+            this.y = !manager.InvertAdding ? Screen.PrimaryScreen.WorkingArea.Height - this.Height * Count - 5 * Count : this.Height * Count + 5 * Count;
+            this.Location = new Point(this.x, this.y);
+            if (manager.PositionType == NotificationPosition.Right)
+                Notification.Default.right++;
+            if (manager.PositionType == NotificationPosition.Left)
+                Notification.Default.left++;
+            if (manager.PositionType == NotificationPosition.Middle)
+                Notification.Default.middle++;
+
+            this.x = Screen.PrimaryScreen.WorkingArea.Width - base.Width - 5;
             this.button1.Image = notify.Images.Cancel;
 
             switch (type)
@@ -138,12 +185,13 @@ namespace NotificationManager
                     break;
             }
 
-
-            this.lblMsg.Text = msg;
-            this.Show();
-            this.action = Action.start;
-            this.timer1.Interval = notify.TimerInterval;
-            this.timer1.Start();
+            if (!isDisposed)
+            {
+                this.Show();
+                this.action = Action.start;
+                this.timer1.Interval = notify.TimerInterval;
+                this.timer1.Start();
+            }
         }
 
         public void showAlert(string msg, NotificationType type, Color color, Image picture, Manager notify)
@@ -166,15 +214,42 @@ namespace NotificationManager
 
         private void Notification_FormClosing(object sender, FormClosingEventArgs e)
         {
-            timer1.Interval = manager.TimerInterval;
-            this.action = Action.close;
-            e.Cancel = true;
+            if (base.Opacity == 1.0)
+            {
+                timer1.Interval = manager.TimerInterval;
+                this.action = Action.close;
+                e.Cancel = true;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Interval = manager.TimerInterval;
             action = Action.close;
+        }
+
+        public void ChangePosition()
+        {
+            if (manager.InvertAdding ? this.Location.Y > this.Height + 5 : this.Location.Y < Screen.PrimaryScreen.WorkingArea.Height - this.Height - 5)
+            {
+                Timer timer = new Timer();
+                timer.Tag = (manager.InvertAdding && this.Location.Y != this.Height + 5) 
+                    || (!manager.InvertAdding && this.Location.Y != Screen.PrimaryScreen.WorkingArea.Height - this.Height - 5) ? this.Height - 1 : 0;
+                timer.Interval = 1;
+                timer.Tick += ((se, evu) =>
+                {
+                    if ((int)timer.Tag > 0)
+                    {
+                        this.Location = new Point(this.Location.X, this.Location.Y - (manager.InvertAdding ? 6 : -6));
+                        timer.Tag = (int)timer.Tag - 6;
+                    }
+                    else
+                        timer.Stop();
+                });
+                if ((int)timer.Tag != 0)
+                    this.Location = new Point(this.Location.X, this.Location.Y - (manager.InvertAdding ? 6 : -6));
+                timer.Start();
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace NotificationManager.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.6.0.0")]
     internal sealed partial class Notification : global::System.Configuration.ApplicationSettingsBase {
         
         private static Notification defaultInstance = ((Notification)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Notification())));
@@ -26,12 +26,36 @@ namespace NotificationManager.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int nums {
+        public int right {
             get {
-                return ((int)(this["nums"]));
+                return ((int)(this["right"]));
             }
             set {
-                this["nums"] = value;
+                this["right"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int left {
+            get {
+                return ((int)(this["left"]));
+            }
+            set {
+                this["left"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int middle {
+            get {
+                return ((int)(this["middle"]));
+            }
+            set {
+                this["middle"] = value;
             }
         }
     }
