@@ -1,6 +1,5 @@
 ﻿using NotificationManager.Properties;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -98,6 +97,8 @@ namespace NotificationManager
         {
             manager = notify;
             lblMsg.Font = notify.Font;
+            button1.FlatAppearance.MouseOverBackColor = button1.FlatAppearance.MouseDownBackColor = button1.FlatAppearance.BorderColor 
+                = notify.HasHighlighting ? Color.Empty : button1.BackColor;
             this.Opacity = 0.0;
             this.StartPosition = FormStartPosition.Manual;
             int Count = 1;

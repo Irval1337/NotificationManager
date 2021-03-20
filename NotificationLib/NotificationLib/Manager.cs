@@ -57,6 +57,11 @@ namespace NotificationManager
         public int MaxTextWidth = 225;
 
         /// <summary>
+		/// Если true, то при наведении мыши на кнопку уведомления, она будет подсвечиваться.
+		/// </summary>
+        public bool HasHighlighting = true;
+
+        /// <summary>
 		/// Отобразить новое уведомление стандартного типа на экране.
 		/// </summary>
         /// <param name="msg"> Основное отображаемое сообщение. </param>

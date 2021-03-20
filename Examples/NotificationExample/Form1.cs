@@ -17,6 +17,7 @@ namespace NotificationExample
             InitializeComponent();
             notify1.MaxTextWidth = 250;
             notify1.EnableOffset = false;
+            notify1.HasHighlighting = false;
 
             notify2.PositionType = NotificationPosition.Right;
             notify2.InvertAdding = true;
