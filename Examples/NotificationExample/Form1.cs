@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using NotificationManager;
 
@@ -18,6 +20,8 @@ namespace NotificationExample
             notify1.MaxTextWidth = 250;
             notify1.EnableOffset = false;
             notify1.HasHighlighting = false;
+            notify1.onFinish += Finish;
+            notify1.onClose += Close;
 
             notify2.PositionType = NotificationPosition.Right;
             notify2.InvertAdding = true;
@@ -66,6 +70,16 @@ namespace NotificationExample
         private void button7_Click(object sender, EventArgs e)
         {
             notify1.InvertAdding = notify2.InvertAdding = notify3.InvertAdding = notify4.InvertAdding = !notify4.InvertAdding;
+        }
+
+        private void Close(object sender, EventArgs e)
+        {
+            File.AppendAllLines("log.txt", new List<string>() { "Closed" });
+        }
+
+        private void Finish(object sender, EventArgs e)
+        {
+            File.AppendAllLines("log.txt", new List<string>() { "Finished" });
         }
     }
 }

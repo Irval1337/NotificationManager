@@ -15,6 +15,8 @@ namespace NotificationManager
 
         public Manager manager;
 
+        private bool wasClosed = false, state = true;
+
         private enum Action
         {
             wait,
@@ -86,6 +88,11 @@ namespace NotificationManager
                             if (manager.EnableOffset && frm != null && ((NotificationForm)frm).manager.PositionType == manager.PositionType && !frm.Equals(this))
                                 ((NotificationForm)frm).ChangePosition();
                         }
+
+                        if (wasClosed)
+                            manager.onClose(sender, e);
+                        else
+                            manager.onFinish(sender, e);
 
                         this.Close();
                     }
@@ -225,6 +232,7 @@ namespace NotificationManager
 
         private void button1_Click(object sender, EventArgs e)
         {
+            wasClosed = true;
             timer1.Interval = manager.TimerInterval;
             action = Action.close;
         }

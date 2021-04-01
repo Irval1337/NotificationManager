@@ -47,6 +47,16 @@ namespace NotificationManager
         public NotificationPosition PositionType = NotificationPosition.Right;
 
         /// <summary>
+		/// Событие искусственного закрытия уведомления.
+		/// </summary>
+        public System.EventHandler onClose = delegate { };
+
+        /// <summary>
+		/// Событие закрытия уведомления по завершении таймера.
+		/// </summary>
+        public System.EventHandler onFinish = delegate { };
+
+        /// <summary>
 		/// Смещение уведомлений после закрытия предыдущего.
 		/// </summary>
         public bool EnableOffset = true;
